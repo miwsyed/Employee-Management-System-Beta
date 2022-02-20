@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSetIsAdminContext } from "./Context/EmployeeProvider";
+import { useEmployee, useSetIsAdminContext } from "./Context/EmployeeProvider";
 const Home = () => {
   let navigate = useNavigate();
   const setIsAdmin = useSetIsAdminContext();

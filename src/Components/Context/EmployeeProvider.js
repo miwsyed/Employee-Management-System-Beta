@@ -1,7 +1,6 @@
 // Create a user context for admin state.
 
 import React, {
-  Children,
   createContext,
   useContext,
   useEffect,
@@ -14,7 +13,9 @@ const DispatchEmployeeContext = createContext();
 const IsAdminContext = createContext();
 const SetIsAdminContext = createContext();
 
-const LS_KEY = "employee_base";
+const LS_EMPLOYEES_KEY = "employee_base";
+const LS_IS_ADMIN_KEY = "is_admin";
+
 const Reducer = (state, action) => {
   switch (action.type) {
     case "ADD_TEAM_LEAD": {
@@ -55,16 +56,24 @@ export const EmployeeProvider = ({ children }) => {
     Reducer,
     initialData,
     (initialValue) => {
-      const persistedValue = localStorage.getItem(LS_KEY);
-      return persistedValue ? JSON.parse(persistedValue) : initialValue;
+      const employeesPersistedValue = localStorage.getItem(LS_EMPLOYEES_KEY);
+      return employeesPersistedValue
+        ? JSON.parse(employeesPersistedValue)
+        : initialValue;
     }
   );
 
-  useEffect(() => {
-    localStorage.setItem(LS_KEY, JSON.stringify(employee));
-  }, [employee]);
+  const [isAdmin, setIsAdmin] = useState((initialValue) => {
+    const isAdminpersistedValue = localStorage.getItem(LS_IS_ADMIN_KEY);
+    return isAdminpersistedValue
+      ? JSON.parse(isAdminpersistedValue)
+      : initialValue;
+  });
 
-  const [isAdmin, setIsAdmin] = useState(false);
+  useEffect(() => {
+    localStorage.setItem(LS_EMPLOYEES_KEY, JSON.stringify(employee));
+    localStorage.setItem(LS_IS_ADMIN_KEY, JSON.stringify(isAdmin));
+  }, [employee, isAdmin]);
 
   return (
     <DispatchEmployeeContext.Provider value={dispatchEmployee}>
