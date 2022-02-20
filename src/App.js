@@ -1,9 +1,14 @@
 import React, { Suspense } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./Components/Navbar/Navbar";
 import { EmployeeProvider } from "./Components/Context/EmployeeProvider";
+const Departments = React.lazy(() =>
+  import("./Components/Departments/Departments")
+);
+const ViewAllEmployees = React.lazy(() =>
+  import("./Components/View Employee/ViewAllEmployees")
+);
 const Visitor = React.lazy(() => import("./Components/Visitor/Visitor"));
 const AdminHome = React.lazy(() => import("./Components/Admin/AdminHome"));
 const NotFound = React.lazy(() => import("./Components/ERROR404/NotFound"));
@@ -23,11 +28,11 @@ function App() {
     <EmployeeProvider>
       <Suspense
         fallback={
-          <>
+          <div className="">
             <div className="spinner-border" role="status">
-              <span className="sr-only"></span>
+              <span className="sr-only"> Please Wait</span>
             </div>
-          </>
+          </div>
         }
       >
         {" "}
@@ -36,10 +41,11 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/add" element={<AddEmployee />} />
-            <Route path="/view" element={<ViewEmployee />} />
+            <Route path="/employees" element={<ViewAllEmployees />} />
             <Route path="/edit/:id" element={<EditEmployee />} />
             <Route path="/admin" element={<AdminHome />} />
             <Route path="/visitor" element={<Visitor />} />
+            <Route path="/departments" element={<Departments />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
