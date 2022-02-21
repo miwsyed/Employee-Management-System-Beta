@@ -3,6 +3,10 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./Components/Navbar/Navbar";
 import { EmployeeProvider } from "./Components/Context/EmployeeProvider";
+const TeamDetails = React.lazy(() =>
+  import("./Components/ViewTeamDetails/TeamDetails")
+);
+const ViewTeams = React.lazy(() => import("./Components/ViewTeams/ViewTeams"));
 const Departments = React.lazy(() =>
   import("./Components/Departments/Departments")
 );
@@ -42,10 +46,15 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/add" element={<AddEmployee />} />
             <Route path="/employees" element={<ViewAllEmployees />} />
-            <Route path="/edit/:id" element={<EditEmployee />} />
+            <Route path="/edit/:empId" element={<EditEmployee />} />
             <Route path="/admin" element={<AdminHome />} />
             <Route path="/visitor" element={<Visitor />} />
-            <Route path="/departments" element={<Departments />} />
+            <Route path="/departments/:deptId" element={<Departments />} />
+            <Route path="/admin/teams/:deptId" element={<ViewTeams />} />
+            <Route
+              path="/admin/team-details/:teamId"
+              element={<TeamDetails />}
+            />
 
             <Route path="*" element={<NotFound />} />
           </Routes>

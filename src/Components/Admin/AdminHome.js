@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useEmployee } from "../Context/EmployeeProvider";
+import DepartmentCard from "./DepartmentCard";
 
 const AdminHome = () => {
   //calling the useEmployee context.
@@ -10,39 +11,36 @@ const AdminHome = () => {
 
   //function to get department names.
   const getAllDepartments = () => {
-    const database = employees.DATABASE;
-    const depts = database.filter((e) => e.DEPARTMENT_DETAILS);
-
-    const deptNames = [];
-    for (let i = 0; i < depts.length; i++) {
-      const dname = depts[i].DEPARTMENT_DETAILS[0];
-      deptNames.push(dname);
-    }
-    console.log(database);
-    setDepartMents(deptNames);
+    setDepartMents(employees.DEPARTMENTS);
   };
   useEffect(() => {
     getAllDepartments();
   }, []);
 
-  departments && console.log(departments);
+  /* Get HOD Name*/
+  const getHOD = (id) => {
+    const allEmployee = employees.EMPLOYEES;
+    const hodName = allEmployee.filter((e) => e.ID === id);
+    return hodName[0].NAME;
+  };
 
   return (
     <>
-      {/* {departments.length > 0 &&
-        departments.map((elm, idx) => {
-          return (
-            <div key={idx} className="card w-25" style={{ width: "1rem;" }}>
-              <div className="card-body">
-                <h5 className="card-title">{elm}</h5>
-                <p className="card-text">
-                  With supporting text below as a natural lead-in to additional
-                  content.
-                </p>
-              </div>
-            </div>
-          );
-        })} */}
+      <div>
+        {departments.length > 0 &&
+          departments.map((elm, idx) => {
+            return (
+              <React.Fragment key={idx}>
+                <DepartmentCard
+                  deptName={elm.NAME}
+                  deptDescription={elm.DESCRIPTION}
+                  HOD={getHOD(elm.HOD_ID)}
+                  deptId={elm.ID}
+                />
+              </React.Fragment>
+            );
+          })}
+      </div>
     </>
   );
 };
