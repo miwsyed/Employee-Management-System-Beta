@@ -9,23 +9,42 @@ const TeamCard = ({ teamName, totalMembers, teamId }) => {
   };
 
   return (
-    <div onClick={handleClick}>
-      <div className="d-flex justify-content-center">
+    <div className="w-100 row ">
+      <div className="d-flex justify-content-center flex-wrap">
         <div
           key={teamId}
-          className="card w-25 mt-5"
-          style={{ width: "1rem", cursor: "pointer" }}
+          className="mx-2 card  mt-5"
+          style={{ width: "20rem", cursor: "pointer" }}
         >
           <div className="card-body">
             <h5 className="card-title">Team Name : {teamName}</h5>
           </div>
-          <div className="card-footer">
+          <div className="card-footer d-flex justify-content-between">
             <div className="card-text">
-              <p>Total Members : {totalMembers}</p>
+              <p>Total Members : {totalMembers + 1}</p>
+            </div>
+            <div className="">
+              <button
+                className="btn btn-outline-dark btn-sm mr-2"
+                onClick={handleClick}
+              >
+                View
+              </button>
+              <div className="custom-del-btn">
+                <button className="btn btn-outline-danger btn-sm">
+                  Delete
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </div>{" "}
+      <style>{`
+        .custom-del-btn{
+          display : inline-flex;
+          margin-inline :5px !important;
+        }
+        `}</style>
     </div>
   );
 };

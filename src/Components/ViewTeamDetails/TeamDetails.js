@@ -5,7 +5,7 @@ import TeamDetailsCard from "./TeamDetailsCard";
 
 const TeamDetails = () => {
   const [teamMemberDetails, setTeamMemberDetails] = useState([]);
-  const [teamLeadDetails, setTeamLeadDetails] = useState([]);
+  const [teamLeadDetails, setTeamLeadDetails] = useState({});
 
   /* getting the department ID from params.*/
   const params = useParams();
@@ -17,44 +17,36 @@ const TeamDetails = () => {
     const allTeams = employees.TEAMS;
     const allEmployees = employees.EMPLOYEES;
     const teamId = params.teamId;
-
+    // fetch all employees
     const targetTeam = allTeams.find((e) => e.ID === teamId);
     const targetMembers = allEmployees.filter((e) =>
       targetTeam.TEAM_MEMBERS_ID.includes(e.ID)
     );
+    //fetch team lead
+    const targetTeamlead = allEmployees.filter(
+      (e) => e.ID === targetTeam.TEAM_LEADER_ID
+    );
+    const addTminfo = Object.assign({}, ...targetTeamlead);
+    addTminfo["IS_TEAM_LEAD"] = true;
+
+    targetMembers.push(addTminfo);
+    console.log(targetMembers);
+
     setTeamMemberDetails(targetMembers);
+
+    setTimeout(() => {}, 100);
   }, [employees.EMPLOYEES, employees.TEAMS, params.teamId]);
 
-  /*function to get Team Id's under the selected Department.*/
-  const fetchTeamLead = useCallback(() => {
-    // const allEmployee = employees.DEPARTMENTS;
-    // const deptInfo = allEmployee.filter((e) => e.ID === departmentID);
-    // const teamsUnderDepartment = deptInfo[0].TEAMS_IDS;
-    // setTeamLeadDetails(teamsUnderDepartment);
-  }, []);
-  console.log(employees);
+  // console.log(teamMemberDetails);
   useEffect(() => {
     fetchTeamMembers();
-    fetchTeamLead();
-  }, [fetchTeamMembers, fetchTeamLead]);
+  }, [fetchTeamMembers]);
 
   return (
     <>
-      <div>
-        {teamMemberDetails.length > 0 &&
-          teamMemberDetails.map((elm, idx) => {
-            return (
-              <React.Fragment key={idx}>
-                <TeamDetailsCard
-                  memberName={elm.NAME}
-                  memberPhone={elm.PHONE}
-                  memberEmail={elm.EMAIL}
-                  memberID={elm.ID}
-                />
-              </React.Fragment>
-            );
-          })}
-      </div>
+      <React.Fragment>
+        <TeamDetailsCard teamMemberDetails={teamMemberDetails} />
+      </React.Fragment>
     </>
   );
 };

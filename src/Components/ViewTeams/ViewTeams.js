@@ -40,19 +40,28 @@ const ViewTeams = () => {
 
   return (
     <>
-      <div>
-        {teams.length > 0 &&
-          teams.map((elm, idx) => {
-            return (
-              <React.Fragment key={idx}>
-                <TeamCard
-                  teamName={elm.NAME}
-                  totalMembers={elm.TEAM_MEMBERS_ID.length}
-                  teamId={elm.ID}
-                />
-              </React.Fragment>
-            );
-          })}
+      <div className="container mx-auto mt-5 ">
+        <div className=" ">
+          <div>
+            <button className="btn btn-outline-dark btn-m d-flex">
+              Add Team
+            </button>
+          </div>
+          <div>
+            {teams.length > 0 &&
+              teams.map((elm, idx) => {
+                return (
+                  <div className="d-inline-flex" key={idx}>
+                    <TeamCard
+                      teamName={elm.NAME}
+                      totalMembers={elm.TEAM_MEMBERS_ID.length}
+                      teamId={elm.ID}
+                    />
+                  </div>
+                );
+              })}
+          </div>
+        </div>
       </div>
     </>
   );

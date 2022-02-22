@@ -34,7 +34,7 @@ function App() {
         fallback={
           <div className="">
             <div className="spinner-border" role="status">
-              <span className="sr-only"> Please Wait</span>
+              <span className="sr-only"></span>
             </div>
           </div>
         }
@@ -46,10 +46,10 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/add" element={<AddEmployee />} />
             <Route path="/employees" element={<ViewAllEmployees />} />
-            <Route path="/edit/:empId" element={<EditEmployee />} />
+            <Route path="/edit/:employeeID" element={<EditEmployee />} />
             <Route path="/admin" element={<AdminHome />} />
             <Route path="/visitor" element={<Visitor />} />
-            <Route path="/departments/:deptId" element={<Departments />} />
+            <Route path="/departments" element={<Departments />} />
             <Route path="/admin/teams/:deptId" element={<ViewTeams />} />
             <Route
               path="/admin/team-details/:teamId"

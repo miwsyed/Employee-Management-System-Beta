@@ -37,10 +37,10 @@ export const initialData = {
       EMAIL: "dineskumar95@gmail.com",
     },
     {
-      NAME: "user 7",
+      NAME: "Sagar Kumar",
       ID: "7",
       PHONE: "9811064326",
-      EMAIL: "test@test.com",
+      EMAIL: "sagarkumar@gmail.com",
     },
     {
       NAME: "Shiraaz Ahmedd",
@@ -54,23 +54,24 @@ export const initialData = {
       PHONE: "7221400852",
       EMAIL: "suresraina12@gmail.com",
     },
+
     {
-      NAME: "Javed Altaf",
-      ID: "9",
-      PHONE: "7881400852",
-      EMAIL: "javaIDaltaf42@gmail.com",
-    },
-    {
-      NAME: "Laraib Khan",
+      NAME: "Vivek Gupta",
       ID: "10",
       PHONE: "7221400300",
-      EMAIL: "laraibkhan99@gmail.com",
+      EMAIL: "vivekgupta99@gmail.com",
     },
     {
       NAME: "Gaurav Kumar",
       ID: "11",
       PHONE: "9811064326",
       EMAIL: "gauravkumar@gmail.com",
+    },
+    {
+      NAME: "New team member",
+      ID: "12",
+      PHONE: "9811067776",
+      EMAIL: "newteammember@gmail.com",
     },
   ],
   DEPARTMENTS: [
@@ -102,7 +103,7 @@ export const initialData = {
       NAME: "team 1",
       ID: "1",
       TEAM_LEADER_ID: "4",
-      TEAM_MEMBERS_ID: ["10"],
+      TEAM_MEMBERS_ID: ["10", "12"],
     },
     {
       NAME: "team 2",
@@ -119,8 +120,8 @@ export const initialData = {
     {
       NAME: "team 4",
       ID: "4",
-      TEAM_LEADER_ID: "6",
-      TEAM_MEMBERS_ID: ["7"],
+      TEAM_LEADER_ID: "7",
+      TEAM_MEMBERS_ID: ["6"],
     },
   ],
 };

@@ -30,14 +30,14 @@ const AdminHome = () => {
         {departments.length > 0 &&
           departments.map((elm, idx) => {
             return (
-              <React.Fragment key={idx}>
+              <div className="d-inline-flex " key={idx}>
                 <DepartmentCard
                   deptName={elm.NAME}
                   deptDescription={elm.DESCRIPTION}
                   HOD={getHOD(elm.HOD_ID)}
                   deptId={elm.ID}
                 />
-              </React.Fragment>
+              </div>
             );
           })}
       </div>

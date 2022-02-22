@@ -9,12 +9,12 @@ const DepartmentCard = ({ deptName, deptDescription, HOD, deptId }) => {
   };
 
   return (
-    <div onClick={handleClick}>
-      <div className="d-flex justify-content-center">
+    <div className="w-100 row " onClick={handleClick}>
+      <div className="d-flex justify-content-center flex-wrap">
         <div
           key={deptId}
-          className="card w-25 mt-5"
-          style={{ width: "1rem", cursor: "pointer" }}
+          className="mx-5 card mt-5"
+          style={{ width: "20rem", cursor: "pointer" }}
         >
           <div className="card-body">
             <h5 className="card-title">{deptName}</h5>
@@ -27,6 +27,9 @@ const DepartmentCard = ({ deptName, deptDescription, HOD, deptId }) => {
           </div>
         </div>
       </div>
+      <style>{`
+       .card{display:inline-block};
+      `}</style>
     </div>
   );
 };

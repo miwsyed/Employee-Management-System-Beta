@@ -1,28 +1,104 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const TeamDetailsCard = ({
-  memberName,
-  memberPhone,
-  memberEmail,
-  memberID,
-}) => {
+const TeamDetailsCard = ({ teamMemberDetails }) => {
+  const deleteContact = () => {};
+
   return (
-    <div>
-      <div className="d-flex justify-content-center">
-        <div
-          key={memberID}
-          className="card w-25 mt-5"
-          style={{ width: "1rem", cursor: "pointer" }}
-        >
-          <div className="card-body">
-            <h5 className="card-title">Team Member : {memberName}</h5>
-            <div className="card-text">Phone : {memberPhone} </div>
-            <div className="card-text">Email : {memberEmail}</div>
-            <div className="card-text">Employee ID : {memberID}</div>
-          </div>
+    <div className="container ">
+      <div className="row d-flex flex-column">
+        <div className="w-100 d-flex justify-content-end ">
+          <Link
+            to="/add"
+            className="btn btn-outline-dark my-5  align-content-end justify-content-end "
+          >
+            Add New Team Member
+          </Link>
+        </div>
+        <div className="col-md-10 mx-auto my-4">
+          <p
+            style={{ fontSize: "3rem" }}
+            className="text-center text-dark py-3 display-2"
+          >
+            Team : {"team"}
+          </p>
+
+          <table
+            className="table table-hover shadow"
+            style={{ cursor: "default" }}
+          >
+            <thead className="table-header bg-dark text-white">
+              <tr>
+                <th scope="col"># </th>
+
+                <th scope="col">Employee ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Quick Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {teamMemberDetails.length > 0 ? (
+                teamMemberDetails.map((elm, id) => (
+                  <tr key={id}>
+                    <td>{id + 1}</td>
+                    <td className="">{elm.ID} </td>
+                    <td>
+                      {elm.NAME}{" "}
+                      {elm.IS_TEAM_LEAD ? (
+                        <>
+                          <span style={{ color: "red", fontWeight: "bold" }}>
+                            TL
+                          </span>
+                        </>
+                      ) : (
+                        <>
+                          {" "}
+                          <span
+                            style={{ color: "lightBlue", fontWeight: "bold" }}
+                          >
+                            TM
+                          </span>
+                        </>
+                      )}
+                    </td>
+                    <td>{elm.EMAIL}</td>
+                    <td>{elm.PHONE}</td>
+                    <td className="quickActions">
+                      <Link
+                        to={`/edit/${elm.ID}`}
+                        className="btn btn-sm btn-outline-dark "
+                      >
+                        Edit
+                      </Link>
+                      <div className="custom-del-btn">
+                        <button
+                          type="button"
+                          onClick={() => deleteContact(elm.D)}
+                          className="btn btn-sm btn-outline-danger"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <th>No contacts found</th>
+                </tr>
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
+      <style>{`
+        .custom-del-btn{
+          display : inline-flex;
+          margin-inline :5px !important;
+        }
+        `}</style>
     </div>
   );
 };
