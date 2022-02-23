@@ -17,19 +17,20 @@ const TeamCard = ({ teamName, totalMembers, teamId }) => {
 
   return (
     <div className="w-100 row ">
-      <div className="d-flex justify-content-center flex-wrap">
+      <div className="d-flex  justify-content-center flex-wrap align-items-stretch">
         <div
           key={teamId}
-          className="mx-2 card  mt-5"
+          className="mx-2 card mt-5"
           style={{ width: "20rem", cursor: "pointer" }}
         >
           <div className="card-body">
             <h5 className="card-title">Team Name : {teamName}</h5>
           </div>
-          <div className="card-footer d-flex justify-content-center">
-            {/* <div className="card-text">
-              <p>Total Members : {totalMembers === 1 ? 1 : totalMembers + 1}</p>
-            </div> */}
+          <div className="card-footer d-flex justify-content-between">
+            <div className="card-text">
+              {/* +1 because we add teamLead later */}
+              <p>Total Members :{totalMembers + 1}</p>
+            </div>
             <div className="">
               <button
                 className="btn btn-outline-dark btn-sm mr-2"
@@ -54,6 +55,10 @@ const TeamCard = ({ teamName, totalMembers, teamId }) => {
           display : inline-flex;
           margin-inline :5px !important;
         }
+        .card {
+          min-height : 18vh !important;
+        }
+        
         `}</style>
     </div>
   );

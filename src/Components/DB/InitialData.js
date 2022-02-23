@@ -112,25 +112,25 @@ export const initialData = {
   ],
   TEAMS: [
     {
-      NAME: "team 1",
+      NAME: "HR Team Beta",
       ID: "1",
       TEAM_LEADER_ID: "4",
       TEAM_MEMBERS_ID: ["10", "12"],
     },
     {
-      NAME: "team 2",
+      NAME: "HR Team Gamma",
       ID: "2",
       TEAM_LEADER_ID: "5",
       TEAM_MEMBERS_ID: ["9"],
     },
     {
-      NAME: "team 3",
+      NAME: "Engineering Team Alpha",
       ID: "3",
       TEAM_LEADER_ID: "6",
       TEAM_MEMBERS_ID: ["8"],
     },
     {
-      NAME: "team 4",
+      NAME: "DESIGN Team Beta",
       ID: "4",
       TEAM_LEADER_ID: "7",
       TEAM_MEMBERS_ID: ["6"],

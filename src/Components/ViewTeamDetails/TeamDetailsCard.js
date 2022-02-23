@@ -5,10 +5,6 @@ import { useEmployeeDispatch } from "../Context/EmployeeProvider";
 const TeamDetailsCard = ({ teamMemberDetails, teamLeadDetails }) => {
   const dispatch = useEmployeeDispatch();
   const deleteContact = (id) => {
-    var answer = window.confirm(
-      "Are you are about to delete the selected employee, please click OK to confirm?"
-    );
-
     dispatch({ type: "DELETE_EMPLOYEE", id });
   };
   const params = useParams();
@@ -93,7 +89,7 @@ const TeamDetailsCard = ({ teamMemberDetails, teamLeadDetails }) => {
                       <div className="custom-del-btn">
                         <button
                           type="button"
-                          onClick={async () => await deleteContact(elm.ID)}
+                          onClick={() => deleteContact(elm.ID)}
                           className="btn btn-sm btn-outline-danger"
                           disabled={isTeamLead(elm.ID)}
                         >
