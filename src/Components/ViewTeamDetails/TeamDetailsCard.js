@@ -2,9 +2,13 @@ import React from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEmployeeDispatch } from "../Context/EmployeeProvider";
 
-const TeamDetailsCard = ({ teamMemberDetails }) => {
+const TeamDetailsCard = ({ teamMemberDetails, teamLeadDetails }) => {
   const dispatch = useEmployeeDispatch();
   const deleteContact = (id) => {
+    var answer = window.confirm(
+      "Are you are about to delete the selected employee, please click OK to confirm?"
+    );
+
     dispatch({ type: "DELETE_EMPLOYEE", id });
   };
   const params = useParams();
@@ -12,6 +16,10 @@ const TeamDetailsCard = ({ teamMemberDetails }) => {
 
   const handleEdit = (id) => {
     navigate(`/edit/${id}`, { state: { teamID: params.teamId } });
+  };
+
+  const isTeamLead = (id) => {
+    return teamLeadDetails.some((e) => e.ID === id);
   };
 
   return (
@@ -56,7 +64,7 @@ const TeamDetailsCard = ({ teamMemberDetails }) => {
                     <td className="">{elm.ID} </td>
                     <td>
                       {elm.NAME}{" "}
-                      {elm.IS_TEAM_LEAD ? (
+                      {isTeamLead(elm.ID) ? (
                         <>
                           <span style={{ color: "red", fontWeight: "bold" }}>
                             TL
@@ -85,9 +93,9 @@ const TeamDetailsCard = ({ teamMemberDetails }) => {
                       <div className="custom-del-btn">
                         <button
                           type="button"
-                          onClick={() => deleteContact(elm.ID)}
+                          onClick={async () => await deleteContact(elm.ID)}
                           className="btn btn-sm btn-outline-danger"
-                          disabled={elm?.IS_TEAM_LEAD === true ? true : false}
+                          disabled={isTeamLead(elm.ID)}
                         >
                           Delete
                         </button>

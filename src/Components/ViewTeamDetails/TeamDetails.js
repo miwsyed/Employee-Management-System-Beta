@@ -5,7 +5,7 @@ import TeamDetailsCard from "./TeamDetailsCard";
 
 const TeamDetails = () => {
   const [teamMemberDetails, setTeamMemberDetails] = useState([]);
-  const [teamLeadDetails, setTeamLeadDetails] = useState({});
+  const [teamLeadDetails, setTeamLeadDetails] = useState([]);
 
   /* getting the department ID from params.*/
   const params = useParams();
@@ -22,13 +22,12 @@ const TeamDetails = () => {
     const targetMembers = allEmployees.filter((e) =>
       targetTeam.TEAM_MEMBERS_ID.includes(e.ID)
     );
-    //fetch team lead
+    // //fetch team lead
     const targetTeamlead = allEmployees.filter(
       (e) => e.ID === targetTeam.TEAM_LEADER_ID
     );
+    setTeamLeadDetails(targetTeamlead);
     const addTminfo = Object.assign({}, ...targetTeamlead);
-    addTminfo["IS_TEAM_LEAD"] = true;
-
     targetMembers.push(addTminfo);
 
     setTeamMemberDetails(targetMembers);
@@ -43,7 +42,10 @@ const TeamDetails = () => {
   return (
     <>
       <React.Fragment>
-        <TeamDetailsCard teamMemberDetails={teamMemberDetails} />
+        <TeamDetailsCard
+          teamMemberDetails={teamMemberDetails}
+          teamLeadDetails={teamLeadDetails}
+        />
       </React.Fragment>
     </>
   );

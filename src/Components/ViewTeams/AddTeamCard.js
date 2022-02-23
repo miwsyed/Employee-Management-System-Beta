@@ -128,10 +128,13 @@ const AddTeamCard = () => {
           dataNewTeamAndDepartment,
         });
 
-        alert("all good boss");
-
+        alert(
+          "Team successfully created. You are now being redircted to the teams page."
+        );
+        setTimeout(() => {
+          navigate(`/admin/team-details/${newID}`);
+        }, 500);
         // navigate back to team details page
-        navigate(`/admin/team-details/${newID}`);
       }
     }
   };

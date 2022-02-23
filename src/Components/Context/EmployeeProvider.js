@@ -46,10 +46,28 @@ const Reducer = (state, action) => {
 
     case "DELETE_EMPLOYEE": {
       let newState = JSON.parse(JSON.stringify(state));
-      newState = newState.EMPLOYEES.filter((e) => e.ID !== action.id);
-      state.EMPLOYEES = [...newState];
-      const updatedState = JSON.parse(JSON.stringify(state));
-      return updatedState;
+      //remove employee it's current team if they are present
+      let isPresentInTeam = newState.TEAMS.some((e) =>
+        e.TEAM_MEMBERS_ID.some((r) => r === String(action.id))
+      );
+      let currentTeam;
+      if (isPresentInTeam) {
+        currentTeam = newState.TEAMS.find((e) =>
+          e.TEAM_MEMBERS_ID.some((r) => r.includes(String(action.id)))
+        );
+        currentTeam.TEAM_MEMBERS_ID.splice(
+          currentTeam.TEAM_MEMBERS_ID.indexOf(String(action.id)),
+          1
+        );
+      }
+
+      // delete employee
+      let remainingEmployees = newState.EMPLOYEES.filter(
+        (e) => e.ID !== action.id
+      );
+      newState.EMPLOYEES = [...remainingEmployees];
+
+      return newState;
     }
 
     case "ADD_TEAM": {

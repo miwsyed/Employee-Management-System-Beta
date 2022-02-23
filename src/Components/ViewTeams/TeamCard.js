@@ -26,10 +26,10 @@ const TeamCard = ({ teamName, totalMembers, teamId }) => {
           <div className="card-body">
             <h5 className="card-title">Team Name : {teamName}</h5>
           </div>
-          <div className="card-footer d-flex justify-content-between">
-            <div className="card-text">
+          <div className="card-footer d-flex justify-content-center">
+            {/* <div className="card-text">
               <p>Total Members : {totalMembers === 1 ? 1 : totalMembers + 1}</p>
-            </div>
+            </div> */}
             <div className="">
               <button
                 className="btn btn-outline-dark btn-sm mr-2"
