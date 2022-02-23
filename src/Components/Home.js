@@ -1,18 +1,15 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useEmployee, useSetIsAdminContext } from "./Context/EmployeeProvider";
+import { useEmployee } from "./Context/EmployeeProvider";
 const Home = () => {
   let navigate = useNavigate();
-  const setIsAdmin = useSetIsAdminContext();
   const handleAdminButton = () => {
     //some login options later maybe
-    setIsAdmin(true);
     navigate(`/admin`);
   };
 
   const handleVisitorButton = () => {
     //set Admin context APi to false
-    setIsAdmin(false);
 
     navigate(`/visitor`);
   };

@@ -30,14 +30,12 @@ const TeamDetails = () => {
     addTminfo["IS_TEAM_LEAD"] = true;
 
     targetMembers.push(addTminfo);
-    console.log(targetMembers);
 
     setTeamMemberDetails(targetMembers);
 
     setTimeout(() => {}, 100);
   }, [employees.EMPLOYEES, employees.TEAMS, params.teamId]);
 
-  // console.log(teamMemberDetails);
   useEffect(() => {
     fetchTeamMembers();
   }, [fetchTeamMembers]);

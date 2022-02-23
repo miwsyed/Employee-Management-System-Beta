@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEmployee } from "../Context/EmployeeProvider";
 import TeamCard from "./TeamCard";
 
@@ -9,6 +9,8 @@ const ViewTeams = () => {
 
   /*hook to store all teams under Selected Department.*/
   const [teams, setTeams] = useState([]);
+
+  const navigate = useNavigate();
 
   /* getting the department ID from params.*/
   const params = useParams();
@@ -36,14 +38,20 @@ const ViewTeams = () => {
     fetchTeams();
     fetchTeamIdsUnderDepartMent();
   }, [fetchTeams, fetchTeamIdsUnderDepartMent]);
-  teams.length > 0 && console.log("Team s: ", teams);
+
+  const handleAddTeam = () => {
+    navigate(`/admin/add-team/${departmentID}`);
+  };
 
   return (
     <>
       <div className="container mx-auto mt-5 ">
         <div className=" ">
           <div>
-            <button className="btn btn-outline-dark btn-m d-flex">
+            <button
+              onClick={handleAddTeam}
+              className="btn btn-outline-dark btn-m d-flex"
+            >
               Add Team
             </button>
           </div>

@@ -1,15 +1,25 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useEmployeeDispatch } from "../Context/EmployeeProvider";
 
 const TeamDetailsCard = ({ teamMemberDetails }) => {
-  const deleteContact = () => {};
+  const dispatch = useEmployeeDispatch();
+  const deleteContact = (id) => {
+    dispatch({ type: "DELETE_EMPLOYEE", id });
+  };
+  const params = useParams();
+  const navigate = useNavigate();
+
+  const handleEdit = (id) => {
+    navigate(`/edit/${id}`, { state: { teamID: params.teamId } });
+  };
 
   return (
     <div className="container ">
       <div className="row d-flex flex-column">
         <div className="w-100 d-flex justify-content-end ">
           <Link
-            to="/add"
+            to={`/add-member/${params.teamId}`}
             className="btn btn-outline-dark my-5  align-content-end justify-content-end "
           >
             Add New Team Member
@@ -66,17 +76,18 @@ const TeamDetailsCard = ({ teamMemberDetails }) => {
                     <td>{elm.EMAIL}</td>
                     <td>{elm.PHONE}</td>
                     <td className="quickActions">
-                      <Link
-                        to={`/edit/${elm.ID}`}
+                      <button
+                        onClick={() => handleEdit(elm.ID)}
                         className="btn btn-sm btn-outline-dark "
                       >
                         Edit
-                      </Link>
+                      </button>
                       <div className="custom-del-btn">
                         <button
                           type="button"
-                          onClick={() => deleteContact(elm.D)}
+                          onClick={() => deleteContact(elm.ID)}
                           className="btn btn-sm btn-outline-danger"
+                          disabled={elm?.IS_TEAM_LEAD === true ? true : false}
                         >
                           Delete
                         </button>

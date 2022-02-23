@@ -3,6 +3,9 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./Components/Navbar/Navbar";
 import { EmployeeProvider } from "./Components/Context/EmployeeProvider";
+const AddTeamCard = React.lazy(() =>
+  import("./Components/ViewTeams/AddTeamCard")
+);
 const TeamDetails = React.lazy(() =>
   import("./Components/ViewTeamDetails/TeamDetails")
 );
@@ -23,9 +26,9 @@ const EditEmployee = React.lazy(() =>
 const AddEmployee = React.lazy(() =>
   import("./Components/AddEmployee/AddEmployee")
 );
-const ViewEmployee = React.lazy(() =>
-  import("./Components/View Employee/ViewEmployee")
-);
+// const ViewEmployee = React.lazy(() =>
+//   import("./Components/View Employee/ViewEmployee")
+// );
 
 function App() {
   return (
@@ -44,13 +47,15 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/add" element={<AddEmployee />} />
+            <Route path="/add-member/:teamId" element={<AddEmployee />} />
             <Route path="/employees" element={<ViewAllEmployees />} />
             <Route path="/edit/:employeeID" element={<EditEmployee />} />
             <Route path="/admin" element={<AdminHome />} />
             <Route path="/visitor" element={<Visitor />} />
             <Route path="/departments" element={<Departments />} />
             <Route path="/admin/teams/:deptId" element={<ViewTeams />} />
+            <Route path="/admin/add-team/:deptID" element={<AddTeamCard />} />
+
             <Route
               path="/admin/team-details/:teamId"
               element={<TeamDetails />}

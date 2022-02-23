@@ -1,49 +1,69 @@
 // Create a user context for admin state.
 
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useReducer,
-  useState,
-} from "react";
+import React, { createContext, useContext, useEffect, useReducer } from "react";
 import { initialData } from "../DB/InitialData";
 const EmployeeContext = createContext();
 const DispatchEmployeeContext = createContext();
-const IsAdminContext = createContext();
-const SetIsAdminContext = createContext();
 
 const LS_EMPLOYEES_KEY = "employee_base";
-const LS_IS_ADMIN_KEY = "is_admin";
 
 const Reducer = (state, action) => {
   switch (action.type) {
-    case "ADD_TEAM_LEAD": {
-      return 1;
-    }
+    case "ADD_TEAM_UNDER_DEPARTMENT": {
+      const newState = JSON.parse(JSON.stringify(state));
+      let newTeamID = action.dataNewTeamAndDepartment.TEAM_ID;
+      let departmentID = action.dataNewTeamAndDepartment.DEPARTMENT_ID;
+      let getDept = newState.DEPARTMENTS.find((e) => e.ID === departmentID);
+      getDept.TEAMS_IDS.push(newTeamID);
 
-    case "UPDATE_TEAM_LEAD": {
-      return 2;
+      return newState;
     }
 
     case "ADD_EMPLOYEE": {
-      return 3;
+      //adding employee
+      const employees = state.EMPLOYEES;
+      employees.push(action.data);
+      state.EMPLOYEES = [...employees];
+      // state = JSON.parse(JSON.stringify(state));
+      //adding employee to team
+      state.TEAMS.filter(
+        (e) => e.ID === action.data.TEAMS_ID
+      )[0].TEAM_MEMBERS_ID.push(action.data.ID);
+
+      return state;
     }
 
     case "UPDATE_EMPLOYEE": {
-      return 4;
+      const newState = JSON.parse(JSON.stringify(state));
+      newState.EMPLOYEES.filter((e) => e.ID === action.data.ID)[0].NAME =
+        action.data.NAME;
+      newState.EMPLOYEES.filter((e) => e.ID === action.data.ID)[0].EMAIL =
+        action.data.EMAIL;
+      newState.EMPLOYEES.filter((e) => e.ID === action.data.ID)[0].PHONE =
+        action.data.PHONE;
+      return newState;
     }
 
-    case "REMOVE_EMPLOYEE": {
-      return 5;
+    case "DELETE_EMPLOYEE": {
+      let newState = JSON.parse(JSON.stringify(state));
+      newState = newState.EMPLOYEES.filter((e) => e.ID !== action.id);
+      state.EMPLOYEES = [...newState];
+      const updatedState = JSON.parse(JSON.stringify(state));
+      return updatedState;
     }
 
     case "ADD_TEAM": {
-      return 6;
+      let newState = JSON.parse(JSON.stringify(state));
+      newState.TEAMS.push(action.dataTeam);
+      return newState;
     }
 
-    case "REMOVE_TEAM": {
-      return 6;
+    case "DELETE_TEAM": {
+      let newState = JSON.parse(JSON.stringify(state));
+      newState = newState.TEAMS.filter((e) => e.ID !== action.teamID);
+      state.TEAMS = [...newState];
+      const updatedState = JSON.parse(JSON.stringify(state));
+      return updatedState;
     }
 
     default:
@@ -63,26 +83,14 @@ export const EmployeeProvider = ({ children }) => {
     }
   );
 
-  const [isAdmin, setIsAdmin] = useState((initialValue) => {
-    const isAdminpersistedValue = localStorage.getItem(LS_IS_ADMIN_KEY);
-    return isAdminpersistedValue
-      ? JSON.parse(isAdminpersistedValue)
-      : initialValue;
-  });
-
   useEffect(() => {
     localStorage.setItem(LS_EMPLOYEES_KEY, JSON.stringify(employee));
-    localStorage.setItem(LS_IS_ADMIN_KEY, JSON.stringify(isAdmin));
-  }, [employee, isAdmin]);
+  }, [employee]);
 
   return (
     <DispatchEmployeeContext.Provider value={dispatchEmployee}>
       <EmployeeContext.Provider value={employee}>
-        <SetIsAdminContext.Provider value={setIsAdmin}>
-          <IsAdminContext.Provider value={isAdmin}>
-            {children}
-          </IsAdminContext.Provider>
-        </SetIsAdminContext.Provider>
+        {children}
       </EmployeeContext.Provider>
     </DispatchEmployeeContext.Provider>
   );
@@ -90,5 +98,3 @@ export const EmployeeProvider = ({ children }) => {
 
 export const useEmployeeDispatch = () => useContext(DispatchEmployeeContext);
 export const useEmployee = () => useContext(EmployeeContext);
-export const useSetIsAdminContext = () => useContext(SetIsAdminContext);
-export const useIsAdminContext = () => useContext(IsAdminContext);

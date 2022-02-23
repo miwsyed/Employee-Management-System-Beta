@@ -68,10 +68,22 @@ export const initialData = {
       EMAIL: "gauravkumar@gmail.com",
     },
     {
-      NAME: "New team member",
+      NAME: "Raju Srivastav",
       ID: "12",
-      PHONE: "9811067776",
-      EMAIL: "newteammember@gmail.com",
+      PHONE: "9811067777",
+      EMAIL: "rajusrivastav@gmail.com",
+    },
+    {
+      NAME: "Ganshyam Srivastav",
+      ID: "13",
+      PHONE: "9811068900",
+      EMAIL: "ganshyam@gmail.com",
+    },
+    {
+      NAME: "Babu Rao Ganpat Rao Waaptey",
+      ID: "14",
+      PHONE: "9811068741",
+      EMAIL: "babubhai@gmail.com",
     },
   ],
   DEPARTMENTS: [

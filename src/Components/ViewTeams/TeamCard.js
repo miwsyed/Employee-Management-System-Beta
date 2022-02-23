@@ -1,11 +1,18 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useEmployeeDispatch } from "../Context/EmployeeProvider";
 
 const TeamCard = ({ teamName, totalMembers, teamId }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate(`/admin/team-details/${teamId}`);
+  };
+
+  const dispatch = useEmployeeDispatch();
+
+  const handleDelete = () => {
+    dispatch({ type: "DELETE_TEAM", teamID: teamId });
   };
 
   return (
@@ -21,7 +28,7 @@ const TeamCard = ({ teamName, totalMembers, teamId }) => {
           </div>
           <div className="card-footer d-flex justify-content-between">
             <div className="card-text">
-              <p>Total Members : {totalMembers + 1}</p>
+              <p>Total Members : {totalMembers === 1 ? 1 : totalMembers + 1}</p>
             </div>
             <div className="">
               <button
@@ -31,7 +38,10 @@ const TeamCard = ({ teamName, totalMembers, teamId }) => {
                 View
               </button>
               <div className="custom-del-btn">
-                <button className="btn btn-outline-danger btn-sm">
+                <button
+                  onClick={handleDelete}
+                  className="btn btn-outline-danger btn-sm"
+                >
                   Delete
                 </button>
               </div>
