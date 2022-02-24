@@ -28,19 +28,10 @@ const ViewTMsUnderTL = () => {
 
   return (
     <div className="container ">
-      <div className="row d-flex flex-column">
-        <div className="col-md-10 mx-auto my-4">
-          <div className="input-group">
-            <input
-              type="search"
-              className="form-control rounded"
-              placeholder="Search by email Id, phone number, email or phone number"
-              aria-label="Search"
-              aria-describedby="search-addon"
-            />
-            <button type="button" className="btn btn-outline-dark">
-              search
-            </button>
+      <div className="row d-flex flex-column ">
+        <div className="col-md-10 mx-auto my-4 shadow mt-5">
+          <div className="text-center">
+            <h2>Team Members</h2>
           </div>
           <table
             className="table table-hover shadow mt-5"

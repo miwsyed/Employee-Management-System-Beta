@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEmployee, useEmployeeDispatch } from "../Context/EmployeeProvider";
+import { validateFields, validateWithDataBase } from "./Validations";
 
 const EditEmployee = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [employeeDetails, setEmployeeDetails] = useState([]);
   const params = useParams();
 
   //get team ID
@@ -23,39 +23,21 @@ const EditEmployee = () => {
       setPhone(empDetails.PHONE);
     }
   }, [empDetails]);
-
+  // calling context API useEmployee
   const dispatchEmployee = useEmployeeDispatch();
   const navigate = useNavigate();
 
-  //validation function later move it to validations folder.
-  const validateFields = () => {
-    if (name === "") return false;
-    else if (email === "") return false;
-    else if (phone === "" || phone.length < 10 || phone.length > 13)
-      return false;
-    return true;
-  };
-  const validateWithDataBase = () => {
-    const isValid = !employees.EMPLOYEES.map((e) => {
-      if (e.NAME === name.trim()) {
-        alert("Name Already exists");
-        return false;
-      } else if (e.EMAIL === email.trim()) {
-        alert("Email Already exists");
-        return false;
-      } else if (e.PHONE === phone.trim()) {
-        alert("Phone Already exists");
-        return false;
-      }
-      return true;
-    }).some((e) => e === false);
-    return isValid;
-  };
+  //call validate fields function
+  const callValidateFields = () => validateFields({ name, email, phone });
 
+  //call validate with database function
+
+  const callValidateWithDatabase = () =>
+    validateWithDataBase({ employees, name, email, phone });
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validateFields() === true) {
-      if (validateWithDataBase() === true) {
+    if (callValidateFields() === true) {
+      if (callValidateWithDatabase() === true) {
         const newID = params.employeeID;
         const addMemberObj = {
           NAME: name,
@@ -68,7 +50,7 @@ const EditEmployee = () => {
         //send dispatch
         dispatchEmployee({ type: "UPDATE_EMPLOYEE", data });
         //navigate back to team details page
-        navigate(`/admin/team-details/${location.state.teamID}`);
+        navigate(`/departments/team-details/${location.state.teamID}`);
       }
     } else alert("Please fill details correctly");
   };
@@ -78,7 +60,7 @@ const EditEmployee = () => {
       <div className="row d-flex flex-column">
         <div className="w-100 d-flex justify-content-end ">
           <Link
-            to="/admin"
+            to="/departments"
             className="btn btn-outline-dark my-5  align-content-end justify-content-end "
           >
             Back
@@ -136,4 +118,4 @@ const EditEmployee = () => {
   );
 };
 
-export default EditEmployee;
+export default memo(EditEmployee);

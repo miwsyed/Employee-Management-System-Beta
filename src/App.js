@@ -13,14 +13,13 @@ const TeamDetails = React.lazy(() =>
   import("./Components/ViewTeamDetails/TeamDetails")
 );
 const ViewTeams = React.lazy(() => import("./Components/ViewTeams/ViewTeams"));
-const Departments = React.lazy(() =>
-  import("./Components/Departments/Departments")
-);
+
 const ViewAllEmployees = React.lazy(() =>
   import("./Components/View Employee/ViewAllEmployees")
 );
-const Visitor = React.lazy(() => import("./Components/Visitor/Visitor"));
-const AdminHome = React.lazy(() => import("./Components/Admin/AdminHome"));
+const Departments = React.lazy(() =>
+  import("./Components/Departments/Departments")
+);
 const NotFound = React.lazy(() => import("./Components/ERROR404/NotFound"));
 const Home = React.lazy(() => import("./Components/Home"));
 const EditEmployee = React.lazy(() =>
@@ -53,18 +52,19 @@ function App() {
             <Route path="/add-member/:teamId" element={<AddEmployee />} />
             <Route path="/employees" element={<ViewAllEmployees />} />
             <Route path="/edit/:employeeID" element={<EditEmployee />} />
-            <Route path="/admin" element={<AdminHome />} />
-            <Route path="/visitor" element={<Visitor />} />
             <Route path="/departments" element={<Departments />} />
-            <Route path="/admin/teams/:deptId" element={<ViewTeams />} />
-            <Route path="/admin/add-team/:deptID" element={<AddTeamCard />} />
+            <Route path="/departments/teams/:deptId" element={<ViewTeams />} />
             <Route
-              path="/admin/employees/under-tl/:tlID"
+              path="/departments/add-team/:deptID"
+              element={<AddTeamCard />}
+            />
+            <Route
+              path="/departments/employees/under-tl/:tlID"
               element={<ViewTMsUnderTL />}
             />
 
             <Route
-              path="/admin/team-details/:teamId"
+              path="/departments/team-details/:teamId"
               element={<TeamDetails />}
             />
 

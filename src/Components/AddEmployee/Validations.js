@@ -1,10 +1,12 @@
+//validation function later move it to validations folder.
+
 export const validateFields = ({ name, email, phone }) => {
   if (name === "") return false;
   else if (email === "") return false;
   else if (phone === "" || phone.length < 10 || phone.length > 13) return false;
   return true;
 };
-export const validateWithDataBase = ({ employees, name, email, phone }) => {
+export const validateWithDataBase = ({ name, email, phone, employees }) => {
   const isValid = !employees.EMPLOYEES.map((e) => {
     if (e.NAME === name.trim()) {
       alert("Name Already exists");

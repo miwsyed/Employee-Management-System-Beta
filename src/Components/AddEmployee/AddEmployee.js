@@ -1,6 +1,7 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { memo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEmployee, useEmployeeDispatch } from "../Context/EmployeeProvider";
+import { validateFields, validateWithDataBase } from "./Validations";
 /// PLANS FOR LATER IMPLEMENT DEBOUNCED VALIDATION
 const AddEmployee = () => {
   const [name, setName] = useState("");
@@ -12,35 +13,17 @@ const AddEmployee = () => {
   const dispatchEmployee = useEmployeeDispatch();
   const employees = useEmployee();
 
-  //validation function later move it to validations folder.
-  const validateFields = () => {
-    if (name === "") return false;
-    else if (email === "") return false;
-    else if (phone === "" || phone.length < 10 || phone.length > 13)
-      return false;
-    return true;
-  };
-  const validateWithDataBase = () => {
-    const isValid = !employees.EMPLOYEES.map((e) => {
-      if (e.NAME === name.trim()) {
-        alert("Name Already exists");
-        return false;
-      } else if (e.EMAIL === email.trim()) {
-        alert("Email Already exists");
-        return false;
-      } else if (e.PHONE === phone.trim()) {
-        alert("Phone Already exists");
-        return false;
-      }
-      return true;
-    }).some((e) => e === false);
-    return isValid;
-  };
+  //calling validating functions
+  const callValidateFields = () => validateFields({ name, email, phone });
+
+  //calling function to validate with database
+  const callValidateWithDatabase = () =>
+    validateWithDataBase({ name, email, phone, employees });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validateFields() === true) {
-      if (validateWithDataBase() === true) {
+    if (callValidateFields() === true) {
+      if (callValidateWithDatabase() === true) {
         const newID =
           Number(
             employees.EMPLOYEES.slice(employees.EMPLOYEES.length - 1)[0].ID
@@ -57,7 +40,7 @@ const AddEmployee = () => {
         //send dispatch
         dispatchEmployee({ type: "ADD_EMPLOYEE", data });
         //navigate back to team details page
-        navigate(`/admin/team-details/${params.teamId}`);
+        navigate(`/departments/team-details/${params.teamId}`);
       }
     } else alert("Please fill details correctly");
   };
@@ -113,4 +96,4 @@ const AddEmployee = () => {
   );
 };
 
-export default AddEmployee;
+export default memo(AddEmployee);

@@ -5,7 +5,7 @@ const DepartmentCard = ({ deptName, deptDescription, HOD, deptId }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/admin/teams/${deptId}`);
+    navigate(`/departments/teams/${deptId}`);
   };
 
   return (

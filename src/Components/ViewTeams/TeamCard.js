@@ -6,7 +6,7 @@ const TeamCard = ({ teamName, totalMembers, teamId }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/admin/team-details/${teamId}`);
+    navigate(`/departments/team-details/${teamId}`);
   };
 
   const dispatch = useEmployeeDispatch();

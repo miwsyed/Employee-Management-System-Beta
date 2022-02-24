@@ -6,6 +6,7 @@ import TeamDetailsCard from "./TeamDetailsCard";
 const TeamDetails = () => {
   const [teamMemberDetails, setTeamMemberDetails] = useState([]);
   const [teamLeadDetails, setTeamLeadDetails] = useState([]);
+  const [teamName, setTeamName] = useState([]);
 
   /* getting the department ID from params.*/
   const params = useParams();
@@ -31,8 +32,13 @@ const TeamDetails = () => {
     targetMembers.push(addTminfo);
 
     setTeamMemberDetails(targetMembers);
-
-    setTimeout(() => {}, 100);
+    //fetch Team Name
+    const teamLeaderID = targetTeamlead.map((e) => e.ID).toString();
+    const getTeamName = allTeams
+      .filter((e) => e.TEAM_LEADER_ID === teamLeaderID)
+      .map((r) => r.NAME)
+      .toString();
+    setTeamName(getTeamName);
   }, [employees.EMPLOYEES, employees.TEAMS, params.teamId]);
 
   useEffect(() => {
@@ -45,6 +51,7 @@ const TeamDetails = () => {
         <TeamDetailsCard
           teamMemberDetails={teamMemberDetails}
           teamLeadDetails={teamLeadDetails}
+          teamName={teamName}
         />
       </React.Fragment>
     </>

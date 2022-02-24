@@ -40,7 +40,7 @@ const ViewTeams = () => {
   }, [fetchTeams, fetchTeamIdsUnderDepartMent]);
 
   const handleAddTeam = () => {
-    navigate(`/admin/add-team/${departmentID}`);
+    navigate(`/departments/add-team/${departmentID}`);
   };
 
   return (

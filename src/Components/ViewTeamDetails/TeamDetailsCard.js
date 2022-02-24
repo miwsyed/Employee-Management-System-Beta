@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEmployeeDispatch } from "../Context/EmployeeProvider";
 
-const TeamDetailsCard = ({ teamMemberDetails, teamLeadDetails }) => {
+const TeamDetailsCard = ({ teamMemberDetails, teamLeadDetails, teamName }) => {
   const dispatch = useEmployeeDispatch();
   const deleteContact = (id) => {
     dispatch({ type: "DELETE_EMPLOYEE", id });
@@ -34,7 +34,7 @@ const TeamDetailsCard = ({ teamMemberDetails, teamLeadDetails }) => {
             style={{ fontSize: "3rem" }}
             className="text-center text-dark py-3 display-2"
           >
-            Team : {"team"}
+            Team : {teamName}
           </p>
 
           <table
