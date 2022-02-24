@@ -3,6 +3,9 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./Components/Navbar/Navbar";
 import { EmployeeProvider } from "./Components/Context/EmployeeProvider";
+const ViewTMsUnderTL = React.lazy(() =>
+  import("./Components/View Employee/ViewTMsUnderTL")
+);
 const AddTeamCard = React.lazy(() =>
   import("./Components/ViewTeams/AddTeamCard")
 );
@@ -55,6 +58,10 @@ function App() {
             <Route path="/departments" element={<Departments />} />
             <Route path="/admin/teams/:deptId" element={<ViewTeams />} />
             <Route path="/admin/add-team/:deptID" element={<AddTeamCard />} />
+            <Route
+              path="/admin/employees/under-tl/:tlID"
+              element={<ViewTMsUnderTL />}
+            />
 
             <Route
               path="/admin/team-details/:teamId"
