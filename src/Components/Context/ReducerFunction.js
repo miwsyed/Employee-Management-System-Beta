@@ -9,6 +9,16 @@ export const Reducer = (state, action) => {
 
       return newState;
     }
+    case "ADD_NEW_EMPLOYEE": {
+      //adding employee
+      const newState = JSON.parse(JSON.stringify(state));
+
+      const employees = newState.EMPLOYEES;
+      employees.push(action.data);
+      newState.EMPLOYEES = [...employees];
+
+      return newState;
+    }
 
     case "ADD_EMPLOYEE": {
       //adding employee

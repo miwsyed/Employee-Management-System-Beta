@@ -1,4 +1,5 @@
 import React, { memo, useState } from "react";
+import { Link } from "react-router-dom";
 
 import EmployeeTable from "./EmployeeTable";
 
@@ -9,6 +10,14 @@ const ViewAllEmployees = () => {
   return (
     <div className="container ">
       <div className="row d-flex flex-column">
+        <div className="w-100 d-flex justify-content-end ">
+          <Link
+            to={`/add-new-employee`}
+            className="btn btn-outline-dark my-5  align-content-end justify-content-end "
+          >
+            Add New Team Member
+          </Link>
+        </div>
         <div className="col-md-10 mx-auto my-4">
           <div className="input-group d-flex justify-content-between w-100 ">
             <div className="d-inline-flex col-xxl-4 col-lg-7 col-md-7 col-sm-12">
