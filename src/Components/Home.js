@@ -11,7 +11,10 @@ const Home = () => {
         <hr />
         <h5>
           <b>Useful Info</b> <br />
-          To add team or team member please use employee Id's from localStorage
+          To add team or team member please use employee Id's from localStorage{" "}
+          <br />
+          To add a new Employee Visit the Empoyees section from navbar and add a
+          new employee from there
         </h5>
         <p>List of functionalities in the upcoming version</p>
 
