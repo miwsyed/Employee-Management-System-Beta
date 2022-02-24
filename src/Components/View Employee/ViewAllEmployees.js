@@ -15,7 +15,7 @@ const ViewAllEmployees = () => {
             to={`/add-new-employee`}
             className="btn btn-outline-dark my-5  align-content-end justify-content-end "
           >
-            Add New Team Member
+            Add New Employee
           </Link>
         </div>
         <div className="col-md-10 mx-auto my-4">
