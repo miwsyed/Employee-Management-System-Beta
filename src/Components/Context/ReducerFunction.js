@@ -73,6 +73,26 @@ export const Reducer = (state, action) => {
       return newState;
     }
 
+    case "SWITCH_EMPLOYEE": {
+      let newState = JSON.parse(JSON.stringify(state));
+      let AllTeams = newState.TEAMS;
+      const { teamMemberID, baseTeamID, targetTeamId } = action.data;
+      //removing employee from current team
+      let currentTeam = AllTeams.find((e) => e.ID === baseTeamID);
+      currentTeam.TEAM_MEMBERS_ID.splice(
+        currentTeam.TEAM_MEMBERS_ID.indexOf(teamMemberID),
+        1
+      );
+
+      //add the employee to target team
+      newState.TEAMS.filter(
+        (e) => e.ID === targetTeamId
+      )[0].TEAM_MEMBERS_ID.push(String(teamMemberID));
+      console.log(newState.TEAMS);
+
+      return newState;
+    }
+
     case "ADD_TEAM": {
       let newState = JSON.parse(JSON.stringify(state));
       newState.TEAMS.push(action.dataTeam);

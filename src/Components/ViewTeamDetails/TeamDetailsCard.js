@@ -1,9 +1,22 @@
-import React from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { useEmployeeDispatch } from "../Context/EmployeeProvider";
+import React, { useCallback, useEffect, useState } from "react";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useEmployee, useEmployeeDispatch } from "../Context/EmployeeProvider";
+import TransferModal from "./TransferModal";
 
 const TeamDetailsCard = ({ teamMemberDetails, teamLeadDetails, teamName }) => {
+  //hooks
+  const [isModalOpen, setIsModelOpen] = useState(false);
+  const [AvailableTeamDetails, setAvailableTeamDetails] = useState([]);
+  const [transferTMID, settransferTMID] = useState(null);
+
+  //contextAPI
   const dispatch = useEmployeeDispatch();
+  const employees = useEmployee();
+
+  //all deaprtments and all teams
+  const allDepartMents = employees.DEPARTMENTS;
+  const allTeams = employees.TEAMS;
+
   const deleteContact = (id) => {
     dispatch({ type: "DELETE_EMPLOYEE", id });
   };
@@ -17,6 +30,36 @@ const TeamDetailsCard = ({ teamMemberDetails, teamLeadDetails, teamName }) => {
   const isTeamLead = (id) => {
     return teamLeadDetails.some((e) => e.ID === id);
   };
+
+  //transfer employee
+  const handleTransfer = (id) => {
+    setIsModelOpen(true);
+    settransferTMID(id);
+  };
+  const handleClose = () => setIsModelOpen(false);
+
+  //fetching all teams under department Id
+  const location = useLocation();
+  const handleTeams = useCallback(() => {
+    //get department Id
+    const deptID = location.state.deptID;
+    //get All team Ids under department
+    const AllteamIDs = allDepartMents
+      .find((e) => e.ID === String(deptID))
+      .TEAMS_IDS.filter((r) => r);
+    // other teams under the department to which transfer is possible
+    const nextTeamsID = AllteamIDs.filter((e) => e !== params.teamId);
+
+    //get nextTeam details
+    const nextTeamDetails = nextTeamsID.map((e) =>
+      allTeams.find((r) => r.ID === e)
+    );
+    setAvailableTeamDetails(nextTeamDetails);
+  }, []);
+
+  useEffect(() => {
+    handleTeams();
+  }, [handleTeams]);
 
   return (
     <div className="container ">
@@ -80,21 +123,38 @@ const TeamDetailsCard = ({ teamMemberDetails, teamLeadDetails, teamName }) => {
                     <td>{elm.EMAIL}</td>
                     <td>{elm.PHONE}</td>
                     <td className="quickActions">
-                      <button
-                        onClick={() => handleEdit(elm.ID)}
-                        className="btn btn-sm btn-outline-dark "
-                      >
-                        Edit
-                      </button>
-                      <div className="custom-del-btn">
-                        <button
-                          type="button"
-                          onClick={() => deleteContact(elm.ID)}
-                          className="btn btn-sm btn-outline-danger"
-                          disabled={isTeamLead(elm.ID)}
-                        >
-                          Delete
-                        </button>
+                      <div className="d-lg-flex justify-content-between">
+                        <div className="mt-sm-2 mx-sm-2 mx-lg-0">
+                          <button
+                            onClick={() => handleEdit(elm.ID)}
+                            className="btn btn-sm btn-outline-dark "
+                            style={{ minWidth: "90px" }}
+                          >
+                            Edit
+                          </button>
+                        </div>{" "}
+                        <div className="mt-sm-2 mx-sm-2 mx-lg-0">
+                          <button
+                            type="button"
+                            onClick={() => deleteContact(elm.ID)}
+                            style={{ minWidth: "90px" }}
+                            className="btn btn-sm btn-outline-danger"
+                            disabled={isTeamLead(elm.ID)}
+                          >
+                            Delete
+                          </button>
+                        </div>
+                        <div className="mt-sm-2 mx-sm-2 mx-lg-0">
+                          <button
+                            onClick={() => handleTransfer(elm.ID)}
+                            className=" btn btn-sm btn-outline-primary "
+                            style={{ minWidth: "90px" }}
+                            data-toggle="modal"
+                            disabled={isTeamLead(elm.ID)}
+                          >
+                            Transfer
+                          </button>
+                        </div>
                       </div>
                     </td>
                   </tr>
@@ -106,8 +166,15 @@ const TeamDetailsCard = ({ teamMemberDetails, teamLeadDetails, teamName }) => {
               )}
             </tbody>
           </table>
+          <TransferModal
+            isModalOpen={isModalOpen}
+            handleClose={handleClose}
+            AvailableTeamDetails={AvailableTeamDetails}
+            transferTMID={transferTMID}
+            baseTeamID={params.teamId}
+          />
         </div>
-      </div>
+      </div>{" "}
       <style>{`
         .custom-del-btn{
           display : inline-flex;

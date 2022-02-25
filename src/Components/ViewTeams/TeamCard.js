@@ -2,11 +2,14 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useEmployeeDispatch } from "../Context/EmployeeProvider";
 
-const TeamCard = ({ teamName, totalMembers, teamId }) => {
+const TeamCard = ({ teamName, totalMembers, teamId, departmentID }) => {
   const navigate = useNavigate();
 
+  //navigating to team-details page along and also sending departmentId for switch team functionality
   const handleClick = () => {
-    navigate(`/departments/team-details/${teamId}`);
+    navigate(`/departments/team-details/${teamId}`, {
+      state: { deptID: departmentID },
+    });
   };
 
   const dispatch = useEmployeeDispatch();

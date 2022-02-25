@@ -64,6 +64,7 @@ const ViewTeams = () => {
                       teamName={elm.NAME}
                       totalMembers={elm.TEAM_MEMBERS_ID.length}
                       teamId={elm.ID}
+                      departmentID={departmentID}
                     />
                   </div>
                 );
