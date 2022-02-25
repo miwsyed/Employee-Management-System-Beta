@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
-import { useEmployee, useEmployeeDispatch } from "../Context/EmployeeProvider";
+import { useEmployeeDispatch } from "../Context/EmployeeProvider";
 
 const TransferModal = ({
   isModalOpen,

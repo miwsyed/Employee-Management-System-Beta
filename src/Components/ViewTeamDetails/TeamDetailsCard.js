@@ -55,7 +55,7 @@ const TeamDetailsCard = ({ teamMemberDetails, teamLeadDetails, teamName }) => {
       allTeams.find((r) => r.ID === e)
     );
     setAvailableTeamDetails(nextTeamDetails);
-  }, []);
+  }, [allDepartMents, allTeams, location.state.deptID, params.teamId]);
 
   useEffect(() => {
     handleTeams();
